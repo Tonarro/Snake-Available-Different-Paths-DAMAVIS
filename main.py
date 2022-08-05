@@ -142,100 +142,107 @@ class SnakeGame(object):
         print()
 
 
-'''
-Brute-force approach
+def main():
+    '''
+    Brute-force approach
 
-All possible paths are tested, and only those that are feasible are taken as
-good.
+    All possible paths are tested, and only those that are feasible are taken
+    as good.
 
-When implementing the following code as a function, it gave me problems when
-creating the object of the SnakeGame class, so I have implemented it this way
-so that it works for me.
+    When implementing the following code as a function
+    (numberOfAvailableDifferentPaths(board, snake, depth)), it gave me problems
+    when creating the object of the SnakeGame class, so I have implemented it
+    this way so that it works for me.
 
-The 3 test cases are tested below:
+    If I had not had that problem I would have created a class for the tests
+    with unittest.
 
-Test 1:
-board: [4, 3]
-snake: [[2,2], [3,2], [3,1], [3,0], [2,0], [1,0], [0,0]]
-depth: 3
-Result: 7
+    The 3 test cases are tested below:
 
-Test 2:
-board: [2, 3]
-snake: [[0,2], [0,1], [0,0], [1,0], [1,1], [1,2]]
-depth: 10
-Result: 1
+    Test 1:
+    board: [4, 3]
+    snake: [[2,2], [3,2], [3,1], [3,0], [2,0], [1,0], [0,0]]
+    depth: 3
+    Result: 7
 
-Test 3:
-board: [10, 10]
-snake: [[5,5], [5,4], [4,4], [4,5]]
-depth: 4
-Result: 81
-'''
+    Test 2:
+    board: [2, 3]
+    snake: [[0,2], [0,1], [0,0], [1,0], [1,1], [1,2]]
+    depth: 10
+    Result: 1
 
-# TEST 1
-all_combinations = ["".join(item)
-                    for item in itertools.product("UDLR", repeat=3)]
-total_paths = 0
+    Test 3:
+    board: [10, 10]
+    snake: [[5,5], [5,4], [4,4], [4,5]]
+    depth: 4
+    Result: 81
+    '''
 
-for comb in all_combinations:
-    snake_board = SnakeGame(rows=4,
-                            columns=3,
-                            snake=[[2, 2], [3, 2], [3, 1], [3, 0],
-                                   [2, 0], [1, 0], [0, 0]])
-    good_path = True
+    # TEST 1
+    all_combinations = ["".join(item)
+                        for item in itertools.product("UDLR", repeat=3)]
+    total_paths = 0
 
-    for direction in comb:
-        if not snake_board.move_snake(direction):
-            good_path = False
-            break
+    for comb in all_combinations:
+        snake_board = SnakeGame(rows=4,
+                                columns=3,
+                                snake=[[2, 2], [3, 2], [3, 1], [3, 0],
+                                       [2, 0], [1, 0], [0, 0]])
+        good_path = True
 
-    if good_path:
-        total_paths += 1
+        for direction in comb:
+            if not snake_board.move_snake(direction):
+                good_path = False
+                break
 
-print(f'Result Test 1: {total_paths}')
+        if good_path:
+            total_paths += 1
+
+    print(f'Result Test 1: {total_paths}')
+
+    # TEST 2
+    all_combinations = ["".join(item)
+                        for item in itertools.product("UDLR", repeat=10)]
+    total_paths = 0
+
+    for comb in all_combinations:
+        snake_board = SnakeGame(rows=2,
+                                columns=3,
+                                snake=[[0, 2], [0, 1], [0, 0], [1, 0], [1, 1],
+                                       [1, 2]])
+        good_path = True
+
+        for direction in comb:
+            if not snake_board.move_snake(direction):
+                good_path = False
+                break
+
+        if good_path:
+            total_paths += 1
+
+    print(f'Result Test 2: {total_paths}')
+
+    # TEST 1
+    all_combinations = ["".join(item)
+                        for item in itertools.product("UDLR", repeat=4)]
+    total_paths = 0
+
+    for comb in all_combinations:
+        snake_board = SnakeGame(rows=10,
+                                columns=10,
+                                snake=[[5, 5], [5, 4], [4, 4], [4, 5]])
+        good_path = True
+
+        for direction in comb:
+            if not snake_board.move_snake(direction):
+                good_path = False
+                break
+
+        if good_path:
+            total_paths += 1
+
+    print(f'Result Test 3: {total_paths}')
 
 
-# TEST 2
-all_combinations = ["".join(item)
-                    for item in itertools.product("UDLR", repeat=10)]
-total_paths = 0
-
-for comb in all_combinations:
-    snake_board = SnakeGame(rows=2,
-                            columns=3,
-                            snake=[[0, 2], [0, 1], [0, 0], [1, 0], [1, 1],
-                                   [1, 2]])
-    good_path = True
-
-    for direction in comb:
-        if not snake_board.move_snake(direction):
-            good_path = False
-            break
-
-    if good_path:
-        total_paths += 1
-
-print(f'Result Test 2: {total_paths}')
-
-
-# TEST 3
-all_combinations = ["".join(item)
-                    for item in itertools.product("UDLR", repeat=4)]
-total_paths = 0
-
-for comb in all_combinations:
-    snake_board = SnakeGame(rows=10,
-                            columns=10,
-                            snake=[[5, 5], [5, 4], [4, 4], [4, 5]])
-    good_path = True
-
-    for direction in comb:
-        if not snake_board.move_snake(direction):
-            good_path = False
-            break
-
-    if good_path:
-        total_paths += 1
-
-print(f'Result Test 3: {total_paths}')
+if __name__ == "__main__":
+    main()
